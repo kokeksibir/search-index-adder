@@ -52,7 +52,7 @@ const getOptions = function (options, done) {
     weight: 0,
     wildcard: true,
     log: {
-      debug: options.logLevel === 'debug' ? console.log : () => {},
+      debug: options.logLevel === 'debug' ? console.log : function() {},
       info: console.info,
       warn: console.warn,
       error: console.error
