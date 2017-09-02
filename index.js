@@ -6,7 +6,6 @@ standalone
 
 */
 
-const bunyan = require('bunyan')
 const levelup = require('levelup')
 const API = require('./lib/API.js')
 
@@ -51,12 +50,14 @@ const getOptions = function (options, done) {
     separator: /\s|\\n|\\u0003|[-.,<>]/,
     stopwords: [],
     weight: 0,
-    wildcard: true
+    wildcard: true,
+    log: {
+      debug: options.logLevel === 'debug' ? console.log : () => {},
+      info: console.info,
+      warn: console.warn,
+      error: console.error
+    }
   }, options)
-  options.log = bunyan.createLogger({
-    name: 'search-index',
-    level: options.logLevel
-  })
   if (!options.indexes) {
     const leveldown = require('leveldown')
     levelup(options.indexPath || 'si', {
